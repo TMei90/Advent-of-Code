@@ -15,26 +15,31 @@ fn main() {
     let list: Vec<&str> = input.lines().collect();
 
     let mut current: i32 = 50;
-    let mut zeros: u32 = 0;
+    let mut zeros: i32 = 0;
     for directions in &list {
         let direction = directions.chars().next().unwrap().to_string();
-        let mut steps = directions[1..].parse::<i32>().unwrap();
+        let steps = directions[1..].parse::<i32>().unwrap();
         print!("\n{:?}, {:?}, {:?}, ", current, direction, steps);
-        while steps >= 100 {
-            steps = steps - 100;
-            zeros = zeros + 1;
-        }
+
         if direction == "L" {
-            current = current - steps;
-            if current < 0 {
-                current += 100;
-                zeros = zeros + 1;
+            for _ in 0..steps {
+                current = current - 1;
+                if current == 0 {
+                    zeros += 1;
+                }
+                if current == -1 {
+                    current = 99;
+                }
             }
-        } else if direction == "R" {
-            current = current + steps;
-            if current >= 100 {
-                current -= 100;
-                zeros = zeros + 1;
+        } else {
+            for _ in 0..steps {
+                current = current + 1;
+                if current == 100 {
+                    current = 0;
+                }
+                if current == 0 {
+                    zeros += 1;
+                }
             }
         }
 
