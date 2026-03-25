@@ -20,16 +20,30 @@ fn main() {
         let (lower, upper) = range.split_once('-').unwrap();
         let lower = lower.parse::<u64>().unwrap();
         let upper = upper.parse::<u64>().unwrap();
+        // Part 2
         for current in lower..=upper {
             let current = current.to_string();
             let current_length = current.len();
-            let (current_low, current_high) = current.split_at(current_length / 2);
-            if current_low == current_high {
-                print!("{:?} ", current);
-                invalid.push(current.parse::<u64>().unwrap());
+            for i in 0..current_length / 2 {
+                let temp = current.clone();
+                let temp = temp.chars().nth(i).unwrap();
+                let mut test: String = temp.to_string();
+                test.push(temp);
+                if current.contains(&test) {
+                    current.rem
+                    print!("{:?} ", current);
+                    invalid.push(current.parse::<u64>().unwrap());
+                    break;
+                }
             }
         }
     }
     let product: u64 = invalid.into_iter().sum();
     println!("\nProduct: {}", product);
+    //   Part1
+    //         let (current_low, current_high) = current.split_at(current_length / 2);
+    //         if current_low == current_high {
+    //             print!("{:?} ", current);
+    //             invalid.push(current.parse::<u64>().unwrap());
+    //         }
 }
