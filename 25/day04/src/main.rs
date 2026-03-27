@@ -19,11 +19,18 @@ fn main() {
         let chars = line.chars().collect::<Vec<char>>();
         map.push(chars);
     }
+
     let mut pickable = 0;
-    for y in 0..map.len() {
-        for x in 0..map[y].len() {
-            if map[y][x] == '@' && is_pickable(&map, x, y) {
-                pickable += 1;
+    let mut removed = true;
+    while removed {
+        removed = false;
+        for y in 0..map.len() {
+            for x in 0..map[y].len() {
+                if map[y][x] == '@' && is_pickable(&map, x, y) {
+                    pickable += 1;
+                    removed = true;
+                    map[y][x] = '.';
+                }
             }
         }
     }
