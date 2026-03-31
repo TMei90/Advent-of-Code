@@ -1,4 +1,4 @@
-use std::{char, env, fs, path, thread::current};
+use std::{char, env, fs, path};
 
 const EXAMPLE: &str = "example_input.txt";
 const REAL: &str = "input.txt";
