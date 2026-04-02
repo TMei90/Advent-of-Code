@@ -140,6 +140,7 @@ fn main() {
     // }
 }
 
+// claud code found  an error for combining intervals that are adjacent, but not overlapping
 fn can_combine_int(range_one: (u64, u64), range_two: (u64, u64)) -> Result<(u64, u64), String> {
     let range_one_lower = range_one.0;
     let range_one_upper = range_one.1;
