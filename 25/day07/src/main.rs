@@ -25,27 +25,41 @@ fn main() {
     // }
     // println!();
 
+    let mut timelines: Vec<Vec<Vec<char>>> = Vec::new();
+    timelines.push(map);
     let mut splits = 0;
-    for row in 0..map.len() {
-        for col in 0..map[0].len() {
-            if map[row][col] == 'S' {
-                map[row + 1][col] = '|';
-            } else if map[row][col] == '^' && map[row - 1][col] == '|' {
-                splits += 1;
-                if col > 0 && map[row][col - 1] == '.' {
-                    map[row][col - 1] = '|';
+    let mut timeline_splits = 1;
+    while timelines.len() > 0 {
+        map = timelines.pop().unwrap();
+        'outer: for row in 0..map.len() {
+            for col in 0..map[0].len() {
+                if map[row][col] == 'S' {
+                    map[row + 1][col] = '|';
+                } else if map[row][col] == '^' && map[row - 1][col] == '|' {
+                    map[row][col] = '*';
+                    splits += 1;
+                    timeline_splits += 1;
+                    if col > 0 {
+                        let temp = map[row][col - 1];
+                        map[row][col - 1] = '|';
+                        timelines.push(map.clone());
+                        map[row][col - 1] = temp;
+                    }
+                    if col < map[0].len() - 1 {
+                        map[row][col + 1] = '|';
+                        timelines.push(map.clone());
+                    }
+                    break 'outer;
+                } else if row > 0 && map[row - 1][col] == '|' && map[row][col] == '.' {
+                    map[row][col] = '|';
                 }
-                if col < map[0].len() - 1 && map[row][col + 1] == '.' {
-                    map[row][col + 1] = '|';
-                }
-            } else if row > 0 && map[row - 1][col] == '|' && map[row][col] == '.' {
-                map[row][col] = '|';
             }
+            // for i in 0..map.len() {
+            //     println!("{:?}", map[i]);
+            // }
+            // println!()
         }
-        // for i in 0..map.len() {
-        //     println!("{:?}", map[i]);
-        // }
-        // println!()
     }
-    print!("Splits: {}", splits);
+    print!("Splits: {}\n", splits);
+    print!("Timeline splits: {}", timeline_splits);
 }
